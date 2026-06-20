@@ -34,48 +34,57 @@ To run and deploy this application, set up the following environment variables (
 | `GOOGLE_CLIENT_SECRET` | Google OAuth Client Secret | `GOCSPX-xxxxxx` |
 | `GOOGLE_REDIRECT_URI` | Google OAuth Redirect Callback URI | `https://your-domain.vercel.app/api/auth/callback` |
 | `SESSION_SECRET` | 32-character key for session cookie encryption | `some-random-32-character-secret` |
-| `POSTGRES_URL` | Vercel Postgres connection string | `postgres://...` (automatically injected by Vercel) |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob Storage connection token | `vercel_blob_rw_...` (automatically injected by Vercel) |
 
 ---
 
-## Database Architecture
+## Datastore Architecture (Vercel Blob Storage)
 
-The application operates on two main Postgres tables:
+Instead of a traditional relational SQL database, the application operates on two JSON files stored in Vercel Blob Storage:
 
-### 1. `workshop_attendees`
+### 1. `attendees.json`
 Maps email addresses to unique integer codes and names.
-```sql
-CREATE TABLE workshop_attendees (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  unique_code INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  CONSTRAINT unique_email_code UNIQUE (email, unique_code)
-);
+```json
+[
+  {
+    "id": 1,
+    "email": "user@example.com",
+    "unique_code": 12345,
+    "name": "Attendee Name"
+  }
+]
 ```
 
-### 2. `workshop_attendance_logs`
-Records each attendance event along with the session name, user takeaway, and rating.
-```sql
-CREATE TABLE workshop_attendance_logs (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  unique_code INTEGER NOT NULL,
-  session_name VARCHAR(255) NOT NULL,
-  takeaway TEXT,
-  rating INTEGER,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
+### 2. `attendance_logs.json`
+Records each attendance event along with the session name, user takeaway, rating, and creation timestamp.
+```json
+[
+  {
+    "id": 1,
+    "email": "user@example.com",
+    "unique_code": 12345,
+    "session_name": "Session 1: Introduction to Web Architectures",
+    "takeaway": "Learned about server components",
+    "rating": 5,
+    "created_at": "2026-06-20T04:36:20.000Z"
+  }
+]
 ```
 
 ---
 
-## Database Setup & Initialization
+## Storage Setup & Initialization
 
-The repository includes a secure setup and seeding endpoint at `/api/db/init`. 
+The repository includes a secure setup and seeding endpoint at `/api/db/init` to initialize files on Vercel Blob Storage.
+
+### Setup Steps in Vercel Dashboard:
+1. Go to your **Vercel Dashboard** and select your project.
+2. Navigate to the **Storage** tab.
+3. Click **Connect Database** or **Create Database** and select **Blob**.
+4. Click **Create** to initialize a new Vercel Blob store. Vercel automatically exposes the `BLOB_READ_WRITE_TOKEN` to your project environment.
 
 ### Initializing and Seeding:
-Once basic auth credentials are input, visit the URL below in your browser to verify/create the database tables and seed your email with a test code:
+Once basic auth credentials are input, visit the URL below in your browser to write the initial attendees file and seed your Google email:
 ```
 https://your-domain.vercel.app/api/db/init?secret=YOUR_BASIC_AUTH_PASSWORD&email=YOUR_GOOGLE_EMAIL@gmail.com&code=12345&name=Sharanam%20Chotai
 ```
@@ -88,5 +97,5 @@ https://your-domain.vercel.app/api/db/init?secret=YOUR_BASIC_AUTH_PASSWORD&email
 - **Framework**: Next.js 16 (App Router)
 - **State Management**: React Server Components (RSC) and Server Actions (`app/actions.ts`)
 - **Styles**: Tailwind CSS v4 & custom Neumorphism classes (`app/globals.css`)
-- **Database Client**: `@vercel/postgres` (Neon pooled client)
+- **Datastore Client**: `@vercel/blob` SDK
 - **Session Management**: Native Node `crypto` AES-256-CBC secure cookies (`lib/auth.ts`)
