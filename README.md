@@ -114,10 +114,15 @@ Invoke-RestMethod -Uri "https://your-domain.vercel.app/api/db/init?secret=YOUR_B
 
 ---
 
-## Technical Stack & Architecture
+## Technical Stack & Architecture~
 
 - **Framework**: Next.js 16 (App Router)
 - **State Management**: React Server Components (RSC) and Server Actions (`app/actions.ts`)
 - **Styles**: Tailwind CSS v4 & custom Neumorphism classes (`app/globals.css`)
 - **Datastore Client**: `@vercel/blob` SDK
 - **Session Management**: Native Node `crypto` AES-256-CBC secure cookies (`lib/auth.ts`)
+
+## Snapshot(s):
+
+<img width="1284" height="826" alt="image" src="https://github.com/user-attachments/assets/f97faf59-6fb7-4b2b-8bf3-031843df2d16" />
+<img width="1176" height="901" alt="image" src="https://github.com/user-attachments/assets/52ab21b8-4dd6-44af-a538-f4026695f2be" />
