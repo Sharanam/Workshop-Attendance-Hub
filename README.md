@@ -1,6 +1,6 @@
-# Generic Attendance System for Workshops
+# Workshop Attendance Hub
 
-A secure, modern, and beautifully designed workshop attendance portal with **Neumorphism** styling. Built with Next.js 16, React 19, Tailwind CSS v4, and Vercel Postgres.
+A secure, modern, and beautifully designed workshop attendance portal with **Neumorphism** styling. Built with Next.js 16, React 19, Tailwind CSS v4, and Vercel Blob Storage.
 
 ## Core Features
 
@@ -12,7 +12,7 @@ A secure, modern, and beautifully designed workshop attendance portal with **Neu
    - Smooth gradients, soft dual-shadow components (`neu-card`, `neu-btn`), and inset-shadow input fields (`neu-inset`).
    - Micro-interactions such as button active press states and interactive star-rating selectors.
 3. **Attendee Verification**:
-   - Logged-in users can verify their unique integer registration codes against the Postgres database.
+   - Logged-in users can verify their unique integer registration codes against the Vercel Blob datastore.
 4. **Attendance Logging**:
    - Verified attendees can mark themselves as attended for specific sessions after providing their key takeaways and a rating.
 5. **History Dashboard**:

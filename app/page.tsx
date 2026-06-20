@@ -38,7 +38,7 @@ export default async function Home({ searchParams }: PageProps) {
                 Workshop Portal
               </span>
               <h1 className="text-3xl font-extrabold tracking-tight leading-tight text-zinc-800 dark:text-zinc-100">
-                Generic Attendance system for workshops
+                Workshop Attendance Hub
               </h1>
             </div>
 

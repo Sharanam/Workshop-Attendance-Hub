@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Generic Attendance system for workshops",
+  title: "Workshop Attendance Hub",
   description: "Secure, simple, and elegant attendance marking system for workshop sessions.",
 };
 

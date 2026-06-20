@@ -1,6 +1,7 @@
 {
-  "name": "nextjs",
+  "name": "workshop-attendance-hub",
   "version": "0.1.0",
+  "author": "Sharanam Chotai (https://www.linkedin.com/in/sharanam-chotai)",
   "private": true,
   "scripts": {
     "dev": "next dev",
