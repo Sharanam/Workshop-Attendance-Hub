@@ -1,8 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e0e5ec;
+  --foreground: #2d3748;
+  --neu-out: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff;
+  --neu-in: inset 4px 4px 8px #b8bec9, inset -4px -4px 8px #ffffff;
+  --neu-flat: #e0e5ec;
+  --neu-border: rgba(255, 255, 255, 0.5);
+  --neu-accent: #4a90e2;
+  --neu-accent-shadow: 4px 4px 8px #cbd3e0, -4px -4px 8px #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1e222b;
+    --foreground: #e2e8f0;
+    --neu-out: 8px 8px 16px #0f1116, -8px -8px 16px #2d3340;
+    --neu-in: inset 4px 4px 8px #0f1116, inset -4px -4px 8px #2d3340;
+    --neu-flat: #1e222b;
+    --neu-border: rgba(255, 255, 255, 0.05);
+    --neu-accent: #3b82f6;
+    --neu-accent-shadow: 4px 4px 8px #0f1116, -4px -4px 8px #2d3340;
+  }
 }
 
 @theme inline {
@@ -12,15 +31,96 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Neumorphic Styling Utility Classes */
+.neu-card {
+  background: var(--neu-flat);
+  box-shadow: var(--neu-out);
+  border-radius: 24px;
+  border: 1px solid var(--neu-border);
+}
+
+.neu-inset {
+  background: var(--neu-flat);
+  box-shadow: var(--neu-in);
+  border-radius: 12px;
+  border: 1px solid transparent;
+}
+
+.neu-inset:focus {
+  border: 1px solid var(--neu-accent);
+}
+
+.neu-btn {
+  background: var(--neu-flat);
+  box-shadow: var(--neu-out);
+  border-radius: 12px;
+  border: 1px solid var(--neu-border);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.neu-btn:hover {
+  transform: translateY(-1px);
+}
+
+.neu-btn:active {
+  box-shadow: var(--neu-in);
+  transform: translateY(1px);
+}
+
+.neu-btn-accent {
+  background: var(--neu-accent);
+  color: #ffffff;
+  box-shadow: var(--neu-accent-shadow);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.neu-btn-accent:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.neu-btn-accent:active {
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+/* Custom styles for rating slider or radios */
+.rating-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--neu-flat);
+  box-shadow: var(--neu-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.rating-dot.active {
+  box-shadow: var(--neu-in);
+  color: var(--neu-accent);
 }
